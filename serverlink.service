@@ -1,0 +1,14 @@
+[Unit]
+Description=UT2004 ServerLink for 3SPN stats
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=
+ExecStart=/usr/bin/php -c . -f  ./serverlink.php -- "46.101.110.108" 29945
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target

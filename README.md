@@ -9,3 +9,12 @@ You must:
 I may have forgotten a step. Worst case you will run into a db insert issue.
 
 On the 3SPN side you *must* enable bot stat recording.
+
+## Restart on VM/software crash/shutdown/restart
+You will probably want this to auto restart when something fatal happens.
+
+Do some googling about "systemd" to understand what it is in a Unix/Linux system.
+
+Then copy the `serverlink.service` file to the appropiate directory/folder on your server.
+
+** You will have to modify this file to have the correct WorkingDirectory **
