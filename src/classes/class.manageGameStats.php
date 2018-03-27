@@ -87,6 +87,22 @@
 			}
 		}
 
+		function getManyPlayerStatsById($server_id,$player_id,$stats_ppr_cnt)
+		{
+			$query = $this->link->prepare("SELECT SUM(rounds) AS rounds, SUM(score) AS score, SUM(kills) AS kills, SUM(deaths) AS deaths, SUM(thaws) AS thaws, SUM(git) AS git FROM gamestats WHERE server_id=? AND player_id=? AND TIMESTAMPDIFF(DAY, timestamp, SYSDATE()) < ?");
+			$query->execute(array($server_id, $player_id, $stats_time_days));
+			$rowcount = $query->rowCount();
+			if($rowcount == 1)
+			{
+				$result = $query->fetchAll();
+				return $result[0];
+			}
+			else
+			{
+				return $rowcount;
+			}
+		}
+
 		function getPlayerStatsById($server_id,$player_id,$stats_time_days)
 		{
 			$query = $this->link->prepare("SELECT SUM(rounds) AS rounds, SUM(score) AS score, SUM(kills) AS kills, SUM(deaths) AS deaths, SUM(thaws) AS thaws, SUM(git) AS git FROM gamestats WHERE server_id=? AND player_id=? AND TIMESTAMPDIFF(DAY, timestamp, SYSDATE()) < ?");
@@ -152,6 +168,26 @@
 			{
 				$result = $query->fetchAll();
 				return $result[0];
+			}
+			else
+			{
+				return $rowcount;
+			}
+		}
+
+
+		function getPlayerStats($server_id,$player_id,$field1,$field2,$field_name,$stats_cnt)
+		{
+			$query = $this->link->prepare("SELECT ($field1/$field2) AS $field_name FROM (SELECT $field1,$field2 FROM gamestats WHERE server_id=? AND player_id=? AND $field2>0 ORDER BY timestamp DESC LIMIT ?) AS t1");
+			$query->bindValue(1, $server_id);
+			$query->bindValue(2, $player_id);
+			$query->bindValue(3, (int)$stats_cnt, PDO::PARAM_INT);
+			$query->execute();
+			$rowcount = $query->rowCount();
+			if($rowcount > 0)
+			{
+				$result = $query->fetchAll();
+				return $result;
 			}
 			else
 			{
