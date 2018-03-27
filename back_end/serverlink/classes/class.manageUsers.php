@@ -77,8 +77,8 @@
 
 		function registerUser($username,$password,$email,$ip_address,$admin)
 		{
-			$query = $this->link->prepare("INSERT INTO users (username,password,email,ip_address,admin) VALUES (?,?,?,?,?)");
-			$query->execute(array($username,$password,$email,$ip_address,$admin));
+			$query = $this->link->prepare("INSERT INTO users (username,password,email,ip_address,user_status,admin,server_admin,validation_code) VALUES (?,?,?,?,?,?,?,?);");
+			$query->execute([$username,$password,$email,$ip_address,1,$admin,$admin,"validate"]);
 			$counts = $query->rowCount();
 			return $counts;
 		}

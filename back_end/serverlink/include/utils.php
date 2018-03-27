@@ -15,7 +15,7 @@ function strtokarray($string,$sep)
 function saltedHashedPwd($password)
 {
 	//dp this not found return sha512('insert-secret-here>'.$password);
-	return hash('sha256', 'secret-hagis-was-here' . $password);
+	return substr(hash('sha256', 'eucoleo8iu98eui' . $password),0,40);
 }
 
 function validateUsername($username)

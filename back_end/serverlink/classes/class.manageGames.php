@@ -29,8 +29,8 @@
 				return 0;
 			$mapId = $mapInfo['id'];
 
-			$query = $this->link->prepare("INSERT INTO games (gametime,server_id,map_id,team_scores) VALUES (?,?,?,?)");
-			$query->execute(array($gametime, $serverId, $mapId, $team_scores));
+			$query = $this->link->prepare("INSERT INTO games (gametime,server_id,map_id,team_scores,gamestats_ids) VALUES (?,?,?,?,?)");
+			$query->execute(array($gametime, $serverId, $mapId, $team_scores, ''));
 			$counts = $query->rowCount();
 			return $counts;
 		}

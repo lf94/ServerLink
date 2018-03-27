@@ -190,9 +190,11 @@
 					else
 					{
 						$bytes = @socket_recv($socket,$buffer,2048,0);
-						if($bytes==false)
+                                                $error = socket_strerror(socket_last_error($socket));
+						if($bytes==false && $error != 'Success')
 						{
-							$this->console($socket." ERROR: ".socket_strerror(socket_last_error($socket)));
+                                                        $this->console('Socket recieve error');
+							$this->console($socket." ERROR: ".$error);
 							$this->disconnect($socket);
 							continue;
 						}

@@ -1,6 +1,7 @@
 <?php
 
 	include_once(__DIR__.'/class.database.php');
+	include_once(__DIR__.'/../include/utils.php');
 
 	class manageServers
 	{
@@ -49,7 +50,7 @@
 		function loginServer($accountname,$password)
 		{
 			$query = $this->link->prepare("SELECT * FROM servers WHERE accountname=? AND password=?");
-			$query->execute(array($accountname,$password));
+			$query->execute(array($accountname, $password));
 			$rowcount = $query->rowCount();
 			return $rowcount;
 		}
