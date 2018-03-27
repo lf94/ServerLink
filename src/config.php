@@ -1,12 +1,14 @@
 <?php
 
-	$server_url = 'http://mgm2.site.nfoservers.com';
-	$db_name = 'mgm2_server_link';
-	$db_user = 'mgm2';
+  // Server URL is not really used. Don't worry about it.
+	$server_url = '';
+
+	// Database credentials and configuration.
+	$db_name = '';
+	$db_user = '';
 	$db_pass = '';
 	$db_host = 'localhost';
 	$db_hosttype = 'host';
 	$db_hostname = 'localhost';
-
 ?>
 
