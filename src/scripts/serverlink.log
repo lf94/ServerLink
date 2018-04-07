@@ -18,3 +18,21 @@ Server Started : 2016-04-01 19:36:49
 Master socket  : Resource id #14
 Listening on   : 208.146.35.56 port 29945
 
+nohup: ignoring input
+
+
+
+
+Parse error: syntax error, unexpected 'in' (T_STRING) in /home/serverlink/sl_test/src/scripts/requestHandlers.php on line 138
+nohup: ignoring input
+
+
+
+
+Parse error: syntax error, unexpected 'in' (T_STRING) in /home/serverlink/sl_test/src/scripts/requestHandlers.php on line 138
+nohup: ignoring input
+
+
+
+
+Parse error: syntax error, unexpected 'in' (T_STRING) in /home/serverlink/sl_test/src/scripts/requestHandlers.php on line 138

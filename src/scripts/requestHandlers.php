@@ -71,7 +71,6 @@ function requestHandlerGetStats($accountname, $params)
 
 	$playerIndex = $params[0];
 	$playerhash = $params[1];
-	$getListOfPPRs = $params[2];
 
 	$players = new managePlayers();
 	$playerInfo = $players->getPlayerInfoByHash($playerhash);
@@ -113,6 +112,7 @@ function requestHandlerGetStats($accountname, $params)
 
 	$rounds = $stats['rounds'];
 	$score = $stats['score'];
+	$points_to_rank_up = "0";
 
 	if($use_relative_rank)
 	{
@@ -122,30 +122,31 @@ function requestHandlerGetStats($accountname, $params)
 			$top_score = $top_score[0];
 			$top_score = max($max_rank_score, $top_score['score']);
 			$rank = max(0.0, min(1.0, number_format((float)$score/(float)$top_score,3,'.','')));
+			$points_to_rank_up = (int)$score % (int)$top_score;
 		}
 		else
 		{
 			$rank = "0";
+			$points_to_rank_up = "0";
 		}
 	}
 	else
 	{
 		$rank = max(0.0, min(1.0, number_format((float)$score/(float)$max_rank_score,3,'.','')));
+		$points_to_rank_up = (int)$score % (int)$max_rank_score;
 	}
 
 	$listStatPPR = $gamestats->getPlayerStats($serverId,$playerId,'score','rounds','ppr',$stats_ppr_cnt);
 	$strListStatPPR = "";
-	foreach($row in $listStatPPR) {
-			$strListStatPPR += $row['ppr'];
+	foreach($listStatPPR as $row) {
+			$strListStatPPR .= $row['ppr'] . " ";
 	}
-
-	echo "LIST AVG PPR: $strListAvgPPR\n";
 
 	$statPPR = $gamestats->getPlayerStatFracAvgByCount($serverId,$playerId,'score','rounds','ppr',$stats_ppr_cnt);
 	$avgPPR = $statPPR!==false ? number_format($statPPR['ppr'],1,'.','') : "0";
 
 	echo "Stats request from server \"$accountname\" for player \"".$playerInfo['playername']."\": rank:$rank, avgPPR:$avgPPR\n";
-	return "STATS_UPDATE $playerIndex $rank $avgPPR $strListStatPPR\n";
+	return "STATS_UPDATE $playerIndex $rank $points_to_rank_up $avgPPR $strListStatPPR\n";
 }
 
 function stat_allowed($stats_lists_allowed, $stat_name)
